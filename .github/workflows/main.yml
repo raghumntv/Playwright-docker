@@ -57,7 +57,10 @@ jobs:
       - 
         name: Run Playwright tests in container
         run: |
-          docker run playwright-image:latest --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+          docker run -e playwright-image:latest --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+          docker exec -it playwright-image:latest /bin/bash
+          cd /usr/src/app
+          ls -al
       - uses: actions/upload-artifact@v2
         if: always()      
         with:
