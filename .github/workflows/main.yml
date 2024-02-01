@@ -44,4 +44,8 @@ jobs:
 
     - name: Run Playwright tests in parallel
       run: |
+        echo ${{ needs.build.outputs.image-id }}    
+
+    - name: Run Playwright tests in parallel
+      run: |
         docker run ${{ needs.build.outputs.image-id }} npm test
