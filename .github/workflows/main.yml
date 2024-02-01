@@ -30,7 +30,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: playwright-docker-image
-        path: .
+        path: .  # Upload the entire project directory as the artifact
 
   test:
     needs: build
@@ -49,12 +49,13 @@ jobs:
       with:
         name: playwright-docker-image
         path: /tmp
-    - name: Display structure of downloaded files
-      run: ls -R /tmp    
+
+    - name: List contents of /tmp
+      run: ls -R /tmp
 
     - name: Load Docker image
       run: |
-        docker load -i /tmp/playwright-docker-image
+        docker load -i /tmp/playwright-docker-image/playwright-docker-image
 
     - name: Run Playwright tests in container
       run: |
