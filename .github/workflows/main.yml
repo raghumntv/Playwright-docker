@@ -48,7 +48,7 @@ jobs:
 
     - name: Load Docker image
       run: |
-        docker load -i /tmp/playwright-docker-image/playwright-docker-image
+        docker load -i /tmp/playwright-docker-image
 
     - name: Run Playwright tests in container
       run: |
