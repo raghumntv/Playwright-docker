@@ -2,9 +2,9 @@ name: Parallel Playwright Tests
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, docker ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main, docker ]
 
 jobs:
   build:
@@ -34,6 +34,10 @@ jobs:
     strategy:
       matrix:
         shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2     
 
     steps:
     - name: PRINT Playwright tests in container
