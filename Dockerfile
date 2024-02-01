@@ -14,4 +14,4 @@ RUN npm ci
 COPY . .
 
 # Command to run Playwright tests
-# CMD ["npm", "test"]
+CMD ["npm", "test"]
