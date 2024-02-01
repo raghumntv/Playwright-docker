@@ -30,7 +30,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: playwright-docker-image
-        path: /path/to/your/Dockerfile
+        path: /Dockerimage
 
   test:
     needs: build
@@ -44,11 +44,11 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: playwright-docker-image
-        path: /path/to/destination
+        path: /Dockerimage
 
     - name: Load Docker image
       run: |
-        docker load -i /path/to/destination/playwright-docker-image
+        docker load -i /Dockerimage/playwright-docker-image
 
     - name: Run Playwright tests in container
       run: |
