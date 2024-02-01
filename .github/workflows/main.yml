@@ -52,12 +52,12 @@ jobs:
         name: Load Docker image
         run: |
           docker load --input /tmp/playwright-image.tar
-          docker image ls -a
 
       - 
         name: Run Playwright tests in container
         run: |
           docker run -e CI=true playwright-image:latest npm test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+      - run: |
           docker exec -it playwright-image:latest /bin/bash
           cd /usr/src/app
           ls -al
