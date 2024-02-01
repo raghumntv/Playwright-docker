@@ -43,4 +43,5 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Run Playwright tests in parallel
-      run: npm test
+      run: |
+        docker run ${{ needs.build.outputs.image-id }} npm test
