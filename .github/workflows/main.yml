@@ -56,12 +56,12 @@ jobs:
       - 
         name: Run Playwright tests in container
         run: |
-          docker run -e CI=true playwright-image:latest npm test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+          docker run -e CI=true playwright-image:latest npm test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} && ls
 
       - name: Copy Blob Report
         run: |
           docker cp $(docker ps -q -l):/path/to/blob-report /tmp
-          
+
       - name: Upload report
         if: always()
         uses: actions/upload-artifact@v2
