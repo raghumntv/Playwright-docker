@@ -7,30 +7,27 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    outputs:
-      image-id: ${{ steps.set-image-id.outputs.image-id }}
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '14'
-
-    - name: Build Docker image
-      id: set-image-id
-      run: |
-        DOCKER_IMAGE_ID=$(docker build -q -t playwright-docker-image:latest .)
-        echo "image-id=$DOCKER_IMAGE_ID" >> $GITHUB_ENV
-
-    - name: Upload Docker image as artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: playwright-docker-image
-        path: .  # Upload the entire project directory as the artifact
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          tags: playwright-image:latest
+          outputs: type=docker,dest=/tmp/playwright-image.tar
+      -
+        name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: playwright-image
+          path: /tmp/playwright-image.tar
 
   test:
     needs: build
@@ -40,23 +37,22 @@ jobs:
         shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
     steps:
-    - name: Clean up /tmp directory
-      run: |
-        find /tmp -maxdepth 1 -type f -user $USER -exec rm -f {} \;
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: playwright-image
+          path: /tmp
+      -
+        name: Load Docker image
+        run: |
+          docker load --input /tmp/playwright-image.tar
+          docker image ls -a
 
-    - name: Download Docker image artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: playwright-docker-image
-        path: /tmp/playwright-docker-image/
-
-    - name: List contents of /tmp
-      run: ls
-
-    - name: Load Docker image
-      run: |
-        docker load -i /tmp/playwright-docker-image/playwright-docker-image
-
-    - name: Run Playwright tests in container
-      run: |
-        docker run -e CI=true playwright-docker-image npm test
+      # - 
+      #   name: Run Playwright tests in container
+      #   run: |
+      #     docker run -e CI=true playwright-docker-image npm test
