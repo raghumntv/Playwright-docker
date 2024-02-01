@@ -58,7 +58,7 @@ jobs:
         run: |
           REPORT_PATH=$(docker run -e CI=true playwright-image:latest npm test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} | tee /tmp/report-path.txt)
           echo "Report path within the container: $REPORT_PATH"
-          docker cp $(docker ps -q -l):$REPORT_PATH /tmp
+          docker cp $(docker ps -q -l):"$REPORT_PATH" /tmp
 
       - name: Upload report
         if: always()
