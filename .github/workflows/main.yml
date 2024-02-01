@@ -48,10 +48,10 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: playwright-docker-image
-        path: /tmp
+        path: /tmp/playwright-docker-image/
 
     - name: List contents of /tmp
-      run: ls -R /tmp
+      run: ls
 
     - name: Load Docker image
       run: |
