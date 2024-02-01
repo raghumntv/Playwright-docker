@@ -62,8 +62,8 @@ jobs:
       - 
         name: Upload report
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
-          name: all-blob-reports
+          name: blob-report
           path: blob-report
           retention-days: 1
