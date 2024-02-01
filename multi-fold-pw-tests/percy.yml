@@ -1,0 +1,22 @@
+version: 2
+percy:
+  token: web_a94794ebcaddd1c7826481c596e888546bf75b9435f4d70daf667837c0850326
+  defer-uploads: false
+snapshot:
+  widths:
+    - 375
+    - 1280
+  minHeight: 1024
+  percyCSS: ""
+  enableJavaScript: false
+  cliEnableJavaScript: true
+  disableShadowDOM: false
+discovery:
+  allowedHostnames: []
+  disallowedHostnames: []
+  networkIdleTimeout: 100
+  captureMockedServiceWorker: false
+upload:
+  files: "**/*.{png,jpg,jpeg}"
+  ignore: ""
+  stripExtensions: false
