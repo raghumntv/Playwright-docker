@@ -52,7 +52,7 @@ jobs:
           docker load --input /tmp/playwright-image.tar
           docker image ls -a
 
-      # - 
-      #   name: Run Playwright tests in container
-      #   run: |
-      #     docker run -e CI=true playwright-docker-image npm test
+      - 
+        name: Run Playwright tests in container
+        run: |
+          docker run -e CI=true playwright-docker-image
