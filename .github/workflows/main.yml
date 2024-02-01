@@ -57,12 +57,9 @@ jobs:
       - 
         name: Run Playwright tests in container
         run: |
-          docker run -e CI=true playwright-image:latest npm test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} --reporter
-
-      - 
-        name: Upload report
-        if: always()
-        uses: actions/upload-artifact@v2
+          docker run -e CI=true playwright-image:latest npm test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+      - uses: actions/upload-artifact@v2
+        if: always()      
         with:
           name: blob-report
           path: blob-report
