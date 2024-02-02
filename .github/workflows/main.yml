@@ -6,6 +6,7 @@ on:
 
 jobs:
   build:
+    name: 🔍 Build playwright image
     runs-on: ubuntu-latest
     steps:
       -
@@ -30,7 +31,7 @@ jobs:
           path: /tmp/playwright-image.tar
 
   test:
-    name: Test (${{ matrix.shardIndex }}/${{ matrix.shardTotal }})
+    name: 🧪 Test (${{ matrix.shardIndex }}/${{ matrix.shardTotal }})
     needs: build
     runs-on: ubuntu-latest
     strategy:
