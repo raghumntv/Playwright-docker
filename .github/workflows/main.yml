@@ -35,8 +35,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shardIndex: [1]
-        shardTotal: [1]
+        shardIndex: [1,2,3,4,5]
+        shardTotal: [5]
 
     steps:
       -
@@ -63,6 +63,6 @@ jobs:
       - uses: actions/upload-artifact@v2
         if: always()      
         with:
-          name: blob-report
+          name: all-blob-reports
           path: blob-report
           retention-days: 1
