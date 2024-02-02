@@ -58,12 +58,11 @@ jobs:
       - 
         name: Run Playwright tests in container
         run: |
-          set -e
           docker run -e CI=true playwright-image:latest npx playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+      - name: copy report
+        run: |
           CONTAINER_ID=$(docker ps -aqf ancestor=playwright-image)
           docker cp $CONTAINER_ID:/usr/src/app/blob-report .
-          trap 'echo "Tests failed but still uploading report."' ERR
-
       - uses: actions/upload-artifact@v2
         if: always()      
         with:
