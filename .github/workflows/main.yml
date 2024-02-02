@@ -60,6 +60,7 @@ jobs:
         run: |
           docker run -e CI=true playwright-image:latest npx playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
       - name: copy report
+        if: always()
         run: |
           CONTAINER_ID=$(docker ps -aqf ancestor=playwright-image)
           docker cp $CONTAINER_ID:/usr/src/app/blob-report .
