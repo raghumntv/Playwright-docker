@@ -102,3 +102,23 @@ jobs:
         name: html-playwright-report
         path: playwright-report
         retention-days: 7
+
+  deploy-gh-pages:
+    name: 🚀 Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: [create-report]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      - name: Install gh-pages
+        run: npm install -g gh-pages
+
+      - name: Deploy to GitHub Pages
+        run: gh-pages -d playwright-report -b docker
