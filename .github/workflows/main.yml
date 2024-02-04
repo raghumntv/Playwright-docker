@@ -100,33 +100,5 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: html-playwright-report
-        path: html-playwright-report
+        path: playwright-report
         retention-days: 7
-    - name: Setup Pages
-      uses: actions/configure-pages@v2
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v1
-      with:
-          # Upload entire repository
-        path: html-playwright-report
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v1
-
-  # host-report:
-  #   name: 📔 host test report
-  #   if: always()
-  #   needs: [create-report]
-
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - name: Setup Pages
-  #     uses: actions/configure-pages@v2
-  #   - name: Upload artifact
-  #     uses: actions/upload-pages-artifact@v1
-  #     with:
-  #         # Upload entire repository
-  #       path: html-playwright-report
-  #   - name: Deploy to GitHub Pages
-  #     id: deployment
-  #     uses: actions/deploy-pages@v1
