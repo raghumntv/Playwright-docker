@@ -114,6 +114,8 @@ jobs:
       run: npm install -g gh-pages
 
     - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v1
       run: gh-pages -d playwright-report -b docker       
 
   # deploy-gh-pages:
