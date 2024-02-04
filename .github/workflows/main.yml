@@ -96,27 +96,19 @@ jobs:
     - name: Merge into HTML Report
       run: npx playwright merge-reports --reporter html ./all-blob-reports 
 
-    - name: Debug
-      run: |
-        ls -R
-        cd playwright-report
-        ls
-        find .
-
     - name: Upload HTML report
       uses: actions/upload-artifact@v2
       with:
         name: html-playwright-report
         path: playwright-report
-        retention-days: 7
+        retention-days: 2
 
-    - name: Install gh-pages
-      run: npm install -g gh-pages
-
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v1
-      run: gh-pages -d playwright-report -b docker       
+    - name: Deploying to Github Pages
+      if: always()
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GIT_TOKEN }}
+        publish_dir: playwright-report       
 
   # deploy-gh-pages:
   #   name: 🚀 Deploy to GitHub Pages
