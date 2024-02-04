@@ -107,7 +107,7 @@ jobs:
       if: always()
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.github-pages }}
+        github_token: ${{ secrets.GIT_TOKEN }}
         publish_dir: playwright-report       
 
   # deploy-gh-pages:
