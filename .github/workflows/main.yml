@@ -99,8 +99,10 @@ jobs:
     - name: Debug
       run: |
         ls -R
+        cd playwright-report
+        ls
         find .
-        
+
     - name: Upload HTML report
       uses: actions/upload-artifact@v2
       with:
@@ -108,22 +110,28 @@ jobs:
         path: playwright-report
         retention-days: 7
 
-  deploy-gh-pages:
-    name: 🚀 Deploy to GitHub Pages
-    runs-on: ubuntu-latest
-    needs: [create-report]
+    - name: Install gh-pages
+      run: npm install -g gh-pages
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+    - name: Deploy to GitHub Pages
+      run: gh-pages -d playwright-report -b docker       
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '14'
+  # deploy-gh-pages:
+  #   name: 🚀 Deploy to GitHub Pages
+  #   runs-on: ubuntu-latest
+  #   needs: [create-report]
 
-      - name: Install gh-pages
-        run: npm install -g gh-pages
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
 
-      - name: Deploy to GitHub Pages
-        run: gh-pages -d playwright-report -b docker
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: '14'
+
+  #     - name: Install gh-pages
+  #       run: npm install -g gh-pages
+
+  #     - name: Deploy to GitHub Pages
+  #       run: gh-pages -d playwright-report -b docker
